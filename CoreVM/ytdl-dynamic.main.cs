@@ -1,3 +1,4 @@
+#if false
 //css_nuget CS-Script
 //css_nuget EasyObject
 using CSScripting;
@@ -5,11 +6,6 @@ using CSScriptLib;
 using System;
 using System.Linq;
 using static Global.EasyObject;
-class Program_04 {
-    static void Main(string[] args)
-    { }
-}
-#if false
 try {
     UseAnsiConsole = true;
     // 実行したいコード (//css_nuget を含める)

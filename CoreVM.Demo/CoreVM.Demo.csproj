@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
+    <ApplicationIcon>./app.ico</ApplicationIcon>
     <IsPackable>false</IsPackable>
     <DebugType>full</DebugType>
     <StartupObject>Global.CoreVM.Demo.Program1</StartupObject>

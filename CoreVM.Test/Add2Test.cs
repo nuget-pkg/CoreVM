@@ -1,18 +1,11 @@
 // ReSharper disable once CheckNamespace
-namespace Global.CoreVM.Test;
-
-using Global;
+namespace CoreTest.CoreVM.Test;
+using Core;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Reflection;
 using System.Runtime.CompilerServices;
 using static Global.EasyObject;
-
-public class Add2Test
-{
+public class Add2Test {
     /// Author: ❝Gemini (Google Large Language Model)❞さん
     /// See: https://gemini.google.com/share/90973a6196da
     /// <summary>
@@ -26,21 +19,18 @@ public class Add2Test
     /// <param name="methodName">The name of the calling method. This parameter is automatically supplied by the compiler and should not be set
     /// explicitly in most cases.</param>
     /// <returns>A string containing the calling method's name and the fully qualified type name of the specified object.</returns>
-    public static string GeminiSuperFullName(object obj, [CallerMemberName] string methodName = "")
-    {
+    private static string GeminiSuperFullName(object obj, [CallerMemberName] string methodName = "") {
         // 引数を省略しても、コンパイラが自動的に呼び出し元のメソッド名を入れます
         return $"#⁅✨{methodName}()✨⁆(CLASS:🌐⁅{obj.GetType().FullName}⁆🌐)";
     }
     [SetUp]
-    public void Setup()
-    {
+    public void Setup() {
         Echo($"▶START!!", title: GeminiSuperFullName(this));
         // Do some setup here...
         Echo($"▶END!!", title: GeminiSuperFullName(this));
     }
     [Test]
-    public void Test001()
-    {
+    public void Test001() {
         // TestContextから現在のメソッド名を取得
         //var methodName = TestContext.CurrentContext.Test.MethodName;
         AssertIdentical(expected: 333, actual: CoreVM.Add2(111, 222));
