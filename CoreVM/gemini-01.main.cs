@@ -5,6 +5,7 @@ using CSScriptLib;
 using System;
 using System.Linq;
 using static Global.EasyObject;
+#if false
 try
 {
     UseAnsiConsole = true;
@@ -51,4 +52,9 @@ try
 catch (Exception ex)
 {
     Abort(ex);
+}
+#endif
+class Program_02 {
+    static void Main(string[] args)
+    { }
 }

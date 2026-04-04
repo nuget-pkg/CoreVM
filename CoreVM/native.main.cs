@@ -4,7 +4,11 @@ using System;
 using System.Threading.Tasks;
 using YoutubeExplode;
 using YoutubeExplode.Converter;
-
+class Program_03 {
+    static void Main(string[] args)
+    { }
+}
+#if false
 new Script().Run();
 
 public class Script
@@ -51,3 +55,4 @@ public class Script
         }
     }
 }
+#endif

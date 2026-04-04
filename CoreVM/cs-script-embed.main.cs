@@ -6,6 +6,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using System.IO;
 using System.Reflection;
 
+#if false
 try
 {
     // 1. Define your source code
@@ -43,4 +44,10 @@ try
 catch (Exception ex)
 {
     Console.WriteLine($"Error: {ex.Message}");
+}
+#endif
+class Program_01
+{
+    static void Main(string[] args)
+    {}
 }

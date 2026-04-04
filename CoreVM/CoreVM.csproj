@@ -49,6 +49,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CoreObject" Version="2026.401.2240.41" />
+    <PackageReference Include="CS-Script" Version="4.14.4" />
+    <PackageReference Include="EasyObject" Version="2026.403.332.39" />
+    <PackageReference Include="YoutubeExplode" Version="6.5.7" />
+    <PackageReference Include="YoutubeExplode.Converter" Version="6.5.7" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
