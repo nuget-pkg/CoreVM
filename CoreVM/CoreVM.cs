@@ -39,4 +39,15 @@ public class CoreVM {
         var assembly = script.CompileMethod(code);
         return assembly;
     }
+    public static dynamic? LookupScriptClass(Assembly? assembly, string className) {
+        if (assembly == null) {
+            return null;
+        }
+        var scriptType = assembly.GetType($"DynamicClass+{className}");
+        if (scriptType == null) {
+            return null;
+        }
+        var scriptInstance = Activator.CreateInstance(scriptType);
+        return scriptInstance;
+    }
 }

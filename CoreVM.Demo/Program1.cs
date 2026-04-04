@@ -35,6 +35,9 @@ public static class Program1 {
             ["System.Threading.Tasks.Extensions"]
         );
         ExpectTrue(assembly != null);
+        dynamic? script = CoreVM.LookupScriptClass(assembly, "Script");
+        ExpectTrue(script != null);
+        script!.Run();
         //Message("﴾↪️END OF PROGRAM↩️﴿");
     }
     private static string code = """

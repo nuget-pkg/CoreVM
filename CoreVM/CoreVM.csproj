@@ -57,7 +57,6 @@
         <PackageReference Include="CoreObject" Version="2026.401.2240.41"/>
         <PackageReference Include="CS-Script" Version="4.14.4"/>
         <PackageReference Include="EasyObject" Version="2026.403.332.39"/>
-        <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.6.3"/>
         <PackageReference Include="YoutubeExplode" Version="6.5.7"/>
         <PackageReference Include="YoutubeExplode.Converter" Version="6.5.7"/>
     </ItemGroup>
