@@ -16,12 +16,12 @@ public class CoreVM {
     //     return cobj.Shuffle().AsStringArray!;
     // }
     public static Assembly? CompileScript(string code, params string[] assemblyNames) {
-        CSScript.Evaluator.With(static eval => { eval.IsCachingEnabled = false; });
         var script = CSScript.Evaluator
                 .ReferenceAssembliesFromCode(code)
             //.ReferenceAssemblyByName("System.Runtime")
             //.ReferenceAssemblyByName("System.Threading.Tasks.Extensions")
             ;
+        CSScript.Evaluator.With(static eval => { eval.IsCachingEnabled = false; });
         var assemblyNamesList = assemblyNames.ToList();
         if (!assemblyNamesList.Contains("System.Threading.Tasks.Extensions")) {
             assemblyNamesList.Add("System.Threading.Tasks.Extensions");
