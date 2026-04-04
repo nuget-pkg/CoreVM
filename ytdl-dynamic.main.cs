@@ -1,4 +1,9 @@
+//css_nuget YoutubeExplode
+//css_nuget YoutubeExplode.Converter
+
 //css_nuget CS-Script
+// //css_nuget Microsoft.CodeAnalysis
+//css_nuget System.Threading.Tasks.Extensions
 //css_nuget EasyObject
 using CSScripting;
 using CSScriptLib;
@@ -10,19 +15,17 @@ try
     UseAnsiConsole = true;
     // 実行したいコード (//css_nuget を含める)
     string code = """
-//css_nuget YoutubeExplode
-//css_nuget YoutubeExplode.Converter
-using System;
-using System.Threading.Tasks;
-using YoutubeExplode;
-using YoutubeExplode.Converter;
+    //css_nuget YoutubeExplode
+    //css_nuget YoutubeExplode.Converter
+    using System;
+    using System.Threading.Tasks;
+    using YoutubeExplode;
+    using YoutubeExplode.Converter;
 
-//new Script().Run();
-
-public class Script
-{
-    public void Run()
+    public class Script
     {
+        public void Run()
+        {
         try
         {
             var youtube = new YoutubeClient();
@@ -57,22 +60,38 @@ public class Script
             downloadAsync.Wait();
             Console.WriteLine("\n完了！");
         }
-        catch (Exception ex)
-        {
-            Console.Error.WriteLine(ex.ToString());
+          catch (Exception ex)
+          {
+              Console.Error.WriteLine(ex.ToString());
+          }
         }
     }
-}
-""";
+    """;
+    //CSScriptLib.CompileInfo.
     var script = CSScript.Evaluator
+                     .ReferenceAssembliesFromCode(code)
                      .ReferenceAssemblyByName("System.Threading.Tasks.Extensions")
-                     //.ReferenceAssembliesFromCode(code)
+                     //.ReferenceAssemblyByName("YoutubeExplode")
+                     //.ReferenceAssemblyByName("YoutubeExplode.Converter")
                      ;
     CSScript.Evaluator.With(static eval =>
     {
         eval.IsCachingEnabled = false;
     });
-    var assembly = script.CompileMethod(code);
+    CompileInfo compileInfo = new()
+    {
+        LanguageVersion = Microsoft.CodeAnalysis.CSharp.LanguageVersion.Latest,
+        PreferLoadingFromFile = true,
+        //CodeKind = Microsoft.CodeAnalysis.SourceCodeKind.Script,
+        CodeKind = Microsoft.CodeAnalysis.SourceCodeKind.Regular,
+        AssemblyName = "DynamicClass",
+        AssemblyFile = "DynamicClass.dll",
+        //RootClass = "Script",
+        //CompilerOptions = "/unsafe",
+        LoadedAssembly = null,
+        PdbFile = null,
+    };
+    var assembly = script.CompileMethod(code, compileInfo);
     Log(assembly != null);
     ExpectTrue(assembly != null, "(assemmbly != null)");
     var classes = assembly!.GetExportedTypes()
@@ -84,10 +103,11 @@ public class Script
     var scriptType = assembly.GetType("DynamicClass+Script");
     ExpectTrue(scriptType != null, "(typpe != null)");
     var wellKnownMethods = new[] { "ToString", "Equals", "GetHashCode", "GetType" };
-    scriptType!.GetMethods().ForEach(m => {
+    scriptType!.GetMethods().ForEach(m =>
+    {
         if (!wellKnownMethods.Contains(m.Name))
             Log($"User-defined method found: {m.Name}");
-        });
+    });
     ExpectTrue(scriptType.GetMethod("Run") != null, "(scriptType.GetMethod(\"Run\") != null)");
     scriptType.GetMethod("Run")!.Invoke(Activator.CreateInstance(scriptType), null);
 }
