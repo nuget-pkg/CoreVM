@@ -32,11 +32,11 @@ public static class Program1 {
         //new NativeScript().Run();
         var assembly = CoreVM.CompileScript(
             code,
-            ["System.Threading.Tasks.Extensions"]
+            [ /*"System.Threading.Tasks.Extensions"*/]
         );
-        ExpectTrue(assembly != null);
+        ExpectBound(assembly);
         dynamic? script = CoreVM.LookupScriptClass(assembly, "Script");
-        ExpectTrue(script != null);
+        ExpectBound(script);
         script!.Run();
         //Message("﴾↪️END OF PROGRAM↩️﴿");
     }

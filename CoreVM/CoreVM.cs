@@ -33,7 +33,11 @@ public class CoreVM {
             //.ReferenceAssemblyByName("System.Runtime")
             //.ReferenceAssemblyByName("System.Threading.Tasks.Extensions")
             ;
-        foreach (var assemblyName in assemblyNames) {
+        var assemblyNamesList = assemblyNames.ToList();
+        if (!assemblyNamesList.Contains("System.Threading.Tasks.Extensions")) {
+            assemblyNamesList.Add("System.Threading.Tasks.Extensions");
+        }
+        foreach (var assemblyName in assemblyNamesList) {
             script.ReferenceAssemblyByName(assemblyName);
         }
         var assembly = script.CompileMethod(code);

@@ -22,7 +22,7 @@
         <Reference Include="System.Xml.Linq" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="EasyObject" Version="2026.403.332.39" />
+        <PackageReference Include="EasyObject" Version="2026.404.1451.54" />
         <PackageReference Include="coverlet.collector" Version="8.0.1">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
