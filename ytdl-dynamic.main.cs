@@ -81,8 +81,8 @@ try
     {
         LanguageVersion = Microsoft.CodeAnalysis.CSharp.LanguageVersion.Latest,
         PreferLoadingFromFile = true,
-        CodeKind = Microsoft.CodeAnalysis.SourceCodeKind.Script,
-        //CodeKind = Microsoft.CodeAnalysis.SourceCodeKind.Regular,
+        //CodeKind = Microsoft.CodeAnalysis.SourceCodeKind.Script,
+        CodeKind = Microsoft.CodeAnalysis.SourceCodeKind.Regular,
         AssemblyName = "DynamicClass",
         AssemblyFile = "DynamicClass.dll",
         RootClass = "RootClass",
