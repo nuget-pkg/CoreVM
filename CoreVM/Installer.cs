@@ -13,6 +13,7 @@ internal class Installer {
         }
     }
     public static string? InstallZipFromStream(Stream stream, string extractPath) {
+        Global.EasyObject.Log(new { method = "InstallZipFromStream", extractPath });
         //stream.Seek(0, SeekOrigin.Begin);
         //byte[] zipBytes = ReadAllBytesFromStream(stream);
 #pragma warning disable SYSLIB0021
