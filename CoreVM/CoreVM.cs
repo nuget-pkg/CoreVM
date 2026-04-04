@@ -22,16 +22,17 @@ public class CoreVM {
     public static Assembly? CompileScript(string code, params string[] assemblyNames) {
         SourceRepository repository = Repository.Factory.GetCoreV3("https://api.nuget.org/v3/index.json");
         FindPackageByIdResource resource = repository.GetResource<FindPackageByIdResource>();
-        Log(code);
+        //Log(code);
         var lines = HyperOperatingSystem.TextToLines(code);
-        Log(lines);
+        //Log(lines);
         foreach (var line in lines) {
-            Log(line, "line");
+            //Log(line, "line");
             List<string>? m = HyperOperatingSystem.FindFirstMatch(line,
                 @"^//css_nuget[ ]+([^ ;]+)[ ]*;?[ ]*",
                 @"^//[+#][+#]nuget[ ]+([^ ;]+)[ ]*;?[ ]*"
             );
             if (m != null) {
+                Log(line, "line");
                 string pkgName = m[1];
                 string pkgVersion = "*";
                 string[] split = pkgName.Split('@');
@@ -43,28 +44,29 @@ public class CoreVM {
                 Log(new { pkgName, pkgVersion });
                 string packageId = "Newtonsoft.Json";
                 NuGetVersion packageVersion = new NuGetVersion("12.0.1");
-                using MemoryStream packageStream = new MemoryStream();
-                async Task<bool> Copier() {
-                    return await resource.CopyNupkgToStreamAsync(
-                        packageId,
-                        packageVersion,
-                        packageStream,
-                        new SourceCacheContext(),
-                        NullLogger.Instance,
-                        CancellationToken.None);
+                using (MemoryStream packageStream = new MemoryStream()) {
+                    async Task<bool> Copier() {
+                        return await resource.CopyNupkgToStreamAsync(
+                            packageId,
+                            packageVersion,
+                            packageStream,
+                            new SourceCacheContext(),
+                            NullLogger.Instance,
+                            CancellationToken.None);
+                    }
+                    var copier = Copier();
+                    copier.Wait();
+                    bool copierResult = copier.Result;
+                    Log(copierResult);
+                    //packageStream.Seek(0, SeekOrigin.Begin);
+                    //Log(packageStream.Length);
+                    //ExpectTrue(packageStream.Length > 0, "Package stream should not be empty.");
+                    //packageStream.Seek(0, SeekOrigin.Begin);
+                    string? packageExtractDir =
+                        HyperOperatingSystem.GitProjectFolder(HyperOperatingSystem.GetCwd(), "tmp", pkgName);
+                    Log(new { pkgName, pkgVersion, packageExtractDir });
+                    Core.Installer.InstallZipFromStream(packageStream, packageExtractDir!);
                 }
-                var copier = Copier();
-                copier.Wait();
-                bool copierResult = copier.Result;
-                Log(copierResult);
-                //packageStream.Seek(0, SeekOrigin.Begin);
-                //Log(packageStream.Length);
-                //ExpectTrue(packageStream.Length > 0, "Package stream should not be empty.");
-                //packageStream.Seek(0, SeekOrigin.Begin);
-                string? packageExtractDir =
-                    HyperOperatingSystem.GitProjectFolder(HyperOperatingSystem.GetCwd(), "tmp", pkgName);
-                Log(new { pkgName, pkgVersion, packageExtractDir });
-                Core.Installer.InstallZipFromStream(packageStream, packageExtractDir!);
             }
         }
         Abort();
