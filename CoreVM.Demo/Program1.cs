@@ -33,6 +33,7 @@ public static class Program1 {
             );
             //new NativeScript().Run();
             Line();
+            Log(code, "code");
             var assembly = CoreVM.CompileScript(
                 code,
                 [ /*"System.Threading.Tasks.Extensions"*/]
