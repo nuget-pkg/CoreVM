@@ -1,8 +1,4 @@
-// //css_nuget YoutubeExplode
-// //css_nuget YoutubeExplode.Converter
-
 //css_nuget CS-Script
-//css_nuget System.Threading.Tasks.Extensions
 //css_nuget EasyObject
 using CSScripting;
 using CSScriptLib;
@@ -14,17 +10,19 @@ try
     UseAnsiConsole = true;
     // 実行したいコード (//css_nuget を含める)
     string code = """
-    //css_nuget YoutubeExplode
-    //css_nuget YoutubeExplode.Converter
-    using System;
-    using System.Threading.Tasks;
-    using YoutubeExplode;
-    using YoutubeExplode.Converter;
+//css_nuget YoutubeExplode
+//css_nuget YoutubeExplode.Converter
+using System;
+using System.Threading.Tasks;
+using YoutubeExplode;
+using YoutubeExplode.Converter;
 
-    public class Script
+//new Script().Run();
+
+public class Script
+{
+    public void Run()
     {
-        public void Run()
-        {
         try
         {
             var youtube = new YoutubeClient();
@@ -59,56 +57,44 @@ try
             downloadAsync.Wait();
             Console.WriteLine("\n完了！");
         }
-          catch (Exception ex)
-          {
-              Console.Error.WriteLine(ex.ToString());
-          }
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine(ex.ToString());
         }
     }
-    """;
-    //CSScriptLib.CompileInfo.
-    var script = CSScript.Evaluator
-                     .ReferenceAssembliesFromCode(code)
-                     .ReferenceAssemblyByName("System.Threading.Tasks.Extensions")
-                     //.ReferenceAssemblyByName("YoutubeExplode")
-                     //.ReferenceAssemblyByName("YoutubeExplode.Converter")
-                     ;
-    CSScript.Evaluator.With(static eval =>
+}
+""";
+    CSScript.RoslynEvaluator.With(static eval =>
     {
         eval.IsCachingEnabled = false;
-    });
-    CompileInfo compileInfo = new()
-    {
-        LanguageVersion = Microsoft.CodeAnalysis.CSharp.LanguageVersion.Latest,
-        PreferLoadingFromFile = true,
-        //CodeKind = Microsoft.CodeAnalysis.SourceCodeKind.Script,
-        CodeKind = Microsoft.CodeAnalysis.SourceCodeKind.Regular,
-        AssemblyName = "DynamicClass",
-        AssemblyFile = "DynamicClass.dll",
-        RootClass = "RootClass",
-        //CompilerOptions = "/unsafe",
-        LoadedAssembly = null,
-        PdbFile = null,
-    };
-    var assembly = script.CompileMethod(code, compileInfo);
-    Log(assembly != null);
-    ExpectTrue(assembly != null, "(assemmbly != null)");
-    var classes = assembly!.GetExportedTypes()
-                          .Where(t => t.IsClass);
-    foreach (var type in classes)
-    {
-        Console.WriteLine($"Found exported class: {type.FullName}");
-    }
-    var scriptType = assembly.GetType("RootClass+RootClass+Script");
-    ExpectTrue(scriptType != null, "(typpe != null)");
-    var wellKnownMethods = new[] { "ToString", "Equals", "GetHashCode", "GetType" };
-    scriptType!.GetMethods().ForEach(m =>
-    {
-        if (!wellKnownMethods.Contains(m.Name))
-            Log($"User-defined method found: {m.Name}");
-    });
-    ExpectTrue(scriptType.GetMethod("Run") != null, "(scriptType.GetMethod(\"Run\") != null)");
-    scriptType.GetMethod("Run")!.Invoke(Activator.CreateInstance(scriptType), null);
+    })
+        .Eval(code);
+    //var script = CSScript.Evaluator
+    //                 .ReferenceAssemblyByName("System.Threading.Tasks.Extensions")
+    //                 //.ReferenceAssembliesFromCode(code)
+    //                 ;
+    //CSScript.Evaluator.With(static eval =>
+    //{
+    //    eval.IsCachingEnabled = false;
+    //});
+    //var assembly = script.CompileMethod(code);
+    //Log(assembly != null);
+    //ExpectTrue(assembly != null, "(assemmbly != null)");
+    //var classes = assembly!.GetExportedTypes()
+    //                      .Where(t => t.IsClass);
+    //foreach (var type in classes)
+    //{
+    //    Console.WriteLine($"Found exported class: {type.FullName}");
+    //}
+    //var scriptType = assembly.GetType("DynamicClass+Script");
+    //ExpectTrue(scriptType != null, "(typpe != null)");
+    //var wellKnownMethods = new[] { "ToString", "Equals", "GetHashCode", "GetType" };
+    //scriptType!.GetMethods().ForEach(m => {
+    //    if (!wellKnownMethods.Contains(m.Name))
+    //        Log($"User-defined method found: {m.Name}");
+    //    });
+    //ExpectTrue(scriptType.GetMethod("Run") != null, "(scriptType.GetMethod(\"Run\") != null)");
+    //scriptType.GetMethod("Run")!.Invoke(Activator.CreateInstance(scriptType), null);
 }
 catch (Exception ex)
 {

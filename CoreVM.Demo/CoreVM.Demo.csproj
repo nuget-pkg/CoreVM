@@ -6,7 +6,7 @@
     <DebugType>full</DebugType>
     <StartupObject>Global.CoreVM.Demo.Program1</StartupObject>
     <LangVersion>latest</LangVersion>
-    <TargetFrameworks>net462;net10.0</TargetFrameworks>
+    <TargetFrameworks>net481;net10.0</TargetFrameworks>
     <Nullable>enable</Nullable>
     <ImplicitUsings>disable</ImplicitUsings>
     <RootNamespace>CoreVM.Demo</RootNamespace>

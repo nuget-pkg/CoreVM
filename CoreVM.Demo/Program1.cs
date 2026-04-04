@@ -10,8 +10,8 @@ public static class Program1 {
             ShowLineNumbers = true;
             ShowDetail = false;
             SetupConsoleEncoding();
-            Core.Script.Run();
-            return; /**/
+            //Core.Script.Run();
+            //return; /**/
             Log(
                 "⁅markup⁆[green]Hello! ハロー© ⁅EMOJI⁆◉▶▸⸝↪️ ↩️ ℴ𝓬➺➢ᰔヾ➠✅🈂️❓❗＼／：＊“≪≫￤；‘｀＃％＄＆＾～￤﴾﴿⁅⁆【】≪≫＋ー＊＝⚽ 𝑪𝒉𝒆𝒄𝒌 🌐🪩[/]");
             //Break();
