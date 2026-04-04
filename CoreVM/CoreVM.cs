@@ -1,4 +1,5 @@
-﻿namespace Core;
+﻿using System.Globalization;
+namespace Core;
 using Global;
 using System.IO;
 using System.IO.Compression;
@@ -15,46 +16,40 @@ using NuGet.Protocol;
 using NuGet.Protocol.Core.Types;
 using NuGet.Versioning;
 using static Global.EasyObject;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using NuGet.Common;
-using NuGet.Protocol;
-using NuGet.Protocol.Core.Types;
-using NuGet.Versioning;
-public class NuGetHelper {
-    public static string? GetLatestVersion(string packageId) {
-        var asyncObject = GetLatestVersionAsync(packageId);
-        asyncObject.Wait();
-        return asyncObject.Result;
-    }
-    public static async Task<string?> GetLatestVersionAsync(string packageId) {
-        ILogger logger = NullLogger.Instance;
-        CancellationToken cancellationToken = CancellationToken.None;
-        // 1. Connect to the NuGet V3 feed
-        SourceCacheContext cache = new SourceCacheContext();
-        SourceRepository repository = Repository.Factory.GetCoreV3("https://api.nuget.org/v3/index.json");
-        // 2. Get the FindPackageByIdResource
-        FindPackageByIdResource resource = await repository.GetResourceAsync<FindPackageByIdResource>();
-        // 3. Fetch all versions for the package
-        IEnumerable<NuGetVersion> versions = await resource.GetAllVersionsAsync(
-            packageId,
-            cache,
-            logger,
-            cancellationToken);
-        // 4. Filter for the latest stable version
-        // Use .Where(v => !v.IsPrerelease) to exclude betas/previews
-        NuGetVersion latestVersion = versions
-            .Where(v => !v.IsPrerelease)
-            .OrderByDescending(v => v)
-            .FirstOrDefault();
-        return latestVersion?.ToNormalizedString();
-    }
-}
 // ReSharper disable once InconsistentNaming
 public class CoreVM {
+    public static EasyObject packageTargetFrameworkList = NewArray();
+    public static EasyObject LoadNupkgSpec(string filePath) {
+        //Break(new { method = "LoadNupkgSpec", filePath });
+        string nuspec = File.ReadAllText(filePath);
+        Log(nuspec, "nuspec");
+        var nuspecObject = Global.NewtonsoftJsonUtil.DeserializeFromXml(nuspec);
+        nuspecObject.Dump(title: "nuspecObject");
+        string packageId = nuspecObject.Dynamic.package.metadata.id;
+        ExpectBound(packageId, new { packageId });
+        //Break(new { packageId });
+        EasyObject dependencies = nuspecObject.Dynamic.package.metadata.dependencies.group;
+        Log(dependencies, "dependencies");
+        //Log(dependencies.Count);
+        for (int i = 0; i < dependencies.Count; i++) {
+            //Log(new { packageId, dependency = dependencies[i].Keys });
+            string fw = dependencies[i]["@targetFramework"].Cast<string>();
+            //Log(new { packageId, fw });
+            if (!fw.StartsWith(".NETStandard2.") && !fw.StartsWith(".NETFramework4.")) {
+                // AD-HOK: only searcing fo .NET Framework
+                Log(fw, "SKIPPING");
+                continue;
+            }
+            var d = dependencies[i];
+            d.Dynamic.packageId = packageId;
+            packageTargetFrameworkList.Add(d);
+        }
+        //Abort();
+        return "*not-implemented*";
+    }
     public static byte[] StreamToByteArray(Stream sourceStream) {
         using (var memoryStream = new MemoryStream()) {
             sourceStream.CopyTo(memoryStream);
@@ -95,12 +90,6 @@ public class CoreVM {
         catch (Exception) {
             ;
         }
-    }
-    public static EasyObject LoadNupkgSpec(string filePath) {
-        Break(new { method = "LoadNupkgSpec", filePath });
-        string nuspec = File.ReadAllText(filePath);
-        Log(nuspec, "nuspec");
-        return "*not-implemented*";
     }
     public static Assembly? CompileScript(string code, params string[] assemblyNames) {
         SourceRepository repository = Repository.Factory.GetCoreV3("https://api.nuget.org/v3/index.json");
@@ -156,12 +145,8 @@ public class CoreVM {
                     string packageExtractDir =
                         HyperOperatingSystem.GitProjectFolder(HyperOperatingSystem.GetCwd(), "tmp", packageId)!;
                     string nupkgFullPath = Path.Combine(packageExtractDir, nupkgBaseName);
-                    // if (!File.Exists(packageExtractPath)) {
-                    //     File.WriteAllBytes(packageExtractPath, nupkgBytes);
-                    // }
                     SafeFileWrite(nupkgFullPath, nupkgBytes);
                     Log(new { pkgName = packageId, pkgVersion = packageVersionObject, packageExtractDir });
-                    //Core.Installer.InstallZipFromStream(packageStream, packageExtractDir!);
                     string relativePath = "?";
                     if (packageVersion == "*") {
                         relativePath = Path.Combine(packageExtractDir, nupkgHash);
@@ -178,6 +163,7 @@ public class CoreVM {
                 }
             }
         }
+        packageTargetFrameworkList.Dump();
         Abort();
         var script = CSScript.Evaluator
                 .ReferenceAssembliesFromCode(code)
@@ -216,5 +202,34 @@ public class CoreVM {
         }
         var scriptInstance = Activator.CreateInstance(scriptType);
         return scriptInstance;
+    }
+}
+public class NuGetHelper {
+    public static string? GetLatestVersion(string packageId) {
+        var asyncObject = GetLatestVersionAsync(packageId);
+        asyncObject.Wait();
+        return asyncObject.Result;
+    }
+    public static async Task<string?> GetLatestVersionAsync(string packageId) {
+        ILogger logger = NullLogger.Instance;
+        CancellationToken cancellationToken = CancellationToken.None;
+        // 1. Connect to the NuGet V3 feed
+        SourceCacheContext cache = new SourceCacheContext();
+        SourceRepository repository = Repository.Factory.GetCoreV3("https://api.nuget.org/v3/index.json");
+        // 2. Get the FindPackageByIdResource
+        FindPackageByIdResource resource = await repository.GetResourceAsync<FindPackageByIdResource>();
+        // 3. Fetch all versions for the package
+        IEnumerable<NuGetVersion> versions = await resource.GetAllVersionsAsync(
+            packageId,
+            cache,
+            logger,
+            cancellationToken);
+        // 4. Filter for the latest stable version
+        // Use .Where(v => !v.IsPrerelease) to exclude betas/previews
+        NuGetVersion? latestVersion = versions
+            .Where(v => !v.IsPrerelease)
+            .OrderByDescending(v => v)
+            .FirstOrDefault();
+        return latestVersion?.ToNormalizedString();
     }
 }
