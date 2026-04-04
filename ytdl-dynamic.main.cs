@@ -86,7 +86,7 @@ try
         //CodeKind = Microsoft.CodeAnalysis.SourceCodeKind.Regular,
         AssemblyName = "DynamicClass",
         AssemblyFile = "DynamicClass.dll",
-        //RootClass = "Script",
+        RootClass = "RootClass",
         //CompilerOptions = "/unsafe",
         LoadedAssembly = null,
         PdbFile = null,
@@ -100,7 +100,7 @@ try
     {
         Console.WriteLine($"Found exported class: {type.FullName}");
     }
-    var scriptType = assembly.GetType("DynamicClass+Script");
+    var scriptType = assembly.GetType("RootClass+RootClass+Script");
     ExpectTrue(scriptType != null, "(typpe != null)");
     var wellKnownMethods = new[] { "ToString", "Equals", "GetHashCode", "GetType" };
     scriptType!.GetMethods().ForEach(m =>
