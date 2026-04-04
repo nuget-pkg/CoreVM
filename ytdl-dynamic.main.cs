@@ -1,8 +1,7 @@
-//css_nuget YoutubeExplode
-//css_nuget YoutubeExplode.Converter
+// //css_nuget YoutubeExplode
+// //css_nuget YoutubeExplode.Converter
 
 //css_nuget CS-Script
-// //css_nuget Microsoft.CodeAnalysis
 //css_nuget System.Threading.Tasks.Extensions
 //css_nuget EasyObject
 using CSScripting;
