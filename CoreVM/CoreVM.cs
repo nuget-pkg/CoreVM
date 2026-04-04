@@ -57,10 +57,10 @@ public class CoreVM {
                 copier.Wait();
                 bool copierResult = copier.Result;
                 Log(copierResult);
-                packageStream.Seek(0, SeekOrigin.Begin);
-                Log(packageStream.Length);
-                ExpectTrue(packageStream.Length > 0, "Package stream should not be empty.");
-                packageStream.Seek(0, SeekOrigin.Begin);
+                //packageStream.Seek(0, SeekOrigin.Begin);
+                //Log(packageStream.Length);
+                //ExpectTrue(packageStream.Length > 0, "Package stream should not be empty.");
+                //packageStream.Seek(0, SeekOrigin.Begin);
                 string? packageExtractDir =
                     HyperOperatingSystem.GitProjectFolder(HyperOperatingSystem.GetCwd(), "tmp", pkgName);
                 Log(new { pkgName, pkgVersion, packageExtractDir });

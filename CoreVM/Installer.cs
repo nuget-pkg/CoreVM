@@ -13,7 +13,7 @@ internal class Installer {
         }
     }
     public static string? InstallZipFromStream(Stream stream, string extractPath) {
-        stream.Seek(0, SeekOrigin.Begin);
+        //stream.Seek(0, SeekOrigin.Begin);
         //byte[] zipBytes = ReadAllBytesFromStream(stream);
 #pragma warning disable SYSLIB0021
         SHA256 crypto = new SHA256CryptoServiceProvider();
