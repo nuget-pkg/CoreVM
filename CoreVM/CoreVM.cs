@@ -1,31 +1,20 @@
-﻿using System.Reflection;
-// ReSharper disable once CheckNamespace
-using CSScriptLib;
+﻿// ReSharper disable once CheckNamespace
 namespace Core;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System;
-using System.Drawing;
-using System.Threading.Tasks;
 using CSScripting;
-using YoutubeExplode;
-using YoutubeExplode.Converter;
-using static Global.EasyObject;
+using CSScriptLib;
+using System;
+using System.Linq;
+using System.Reflection;
 
 // ReSharper disable once InconsistentNaming
 public class CoreVM {
-    public static int Add2(int a, int b) {
-        return a + b;
-    }
-    public static string[] ShuffulStringArray(string[] arr) {
-        var cobj = CoreObject.FromObject(arr);
-        return cobj.Shuffle().AsStringArray!;
-    }
+    // public static int Add2(int a, int b) {
+    //     return a + b;
+    // }
+    // public static string[] ShuffulStringArray(string[] arr) {
+    //     var cobj = CoreObject.FromObject(arr);
+    //     return cobj.Shuffle().AsStringArray!;
+    // }
     public static Assembly? CompileScript(string code, params string[] assemblyNames) {
         CSScript.Evaluator.With(static eval => { eval.IsCachingEnabled = false; });
         var script = CSScript.Evaluator

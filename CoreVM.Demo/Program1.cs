@@ -18,8 +18,9 @@ public static class Program1 {
             "!! THIS TEXT CAN BE CLICKED FOR OPENING URL !! («YOUTUBE PLAYLIST»⭕️⁅🌐⁆@⁅反転mirror⁆パイパイ仮面でどうかしらん？ / 宝鐘マリン FULL 踊ってみた【練習用】 - YouTube)",
             "https://www.youtube.com/watch?v=sLpodTN4xhI&list=PLTvSv0jkjbk9-emLIV2vM-0p7CeMnTYG2");
         Debug(new { args });
-        var answer = CoreVM.Add2(11, 22);
-        Debug(new { answer });
+        // var answer = CoreVM.Add2(11, 22);
+        // Debug(new { answer });
+        var answer = 11 + 22;
         ExpectEquivalent(
             expected: 33,
             actual: answer,
