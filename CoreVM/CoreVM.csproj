@@ -3,10 +3,12 @@
     <OutputType>Library</OutputType>
     <IsPackable>true</IsPackable>
     <LangVersion>latest</LangVersion>
-    <TargetFrameworks>netstandard2.0;net462;net8.0</TargetFrameworks>
+    <!--<TargetFrameworks>netstandard2.0;net462;net8.0</TargetFrameworks>-->
+    <TargetFrameworks>net462;net8.0</TargetFrameworks>
     <Version>0.0.0.0</Version>
     <Nullable>enable</Nullable>
     <ImplicitUsings>disable</ImplicitUsings>
+    <WarningsAsErrors>nullable</WarningsAsErrors>
     <Title>CoreVM Library</Title>
     <PackageId>CoreVM</PackageId>
     <RootNamespace>CoreVM</RootNamespace>
@@ -14,10 +16,9 @@
     <Description>CoreVM Library</Description>
     <PackageProjectUrl>https://github.com/nuget-pkg/CoreVM</PackageProjectUrl>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <WarningsAsErrors>nullable</WarningsAsErrors>
     <!--<NoWarn></NoWarn>-->
     <!--<PackageTags>json;parser</PackageTags>-->
-    <Authors>JavaCommons</Authors>
+    <Authors>JavaCommons;Gemini(Google Large Language Model)</Authors>
     <Company>JavaCommons Technologies</Company>
     <Copyright>Copyright © JavaCommons Technologies 2026</Copyright>
     <NeutralLanguage>en-US</NeutralLanguage>
@@ -29,7 +30,12 @@
     <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
   <PropertyGroup>
-    <DebugType>full</DebugType>
+    <!-- https://gemini.google.com/share/62f63a243809 (suggested by ❝Gemini (Google Large Language Model)❞) -->
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+    <!--<DebugType>full</DebugType>-->
+    <DebugType>portable</DebugType>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
   </PropertyGroup>
   <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
     <Reference Include="Microsoft.CSharp" />
@@ -53,7 +59,7 @@
     <PackageReference Include="EasyObject" Version="2026.403.332.39" />
     <PackageReference Include="YoutubeExplode" Version="6.5.7" />
     <PackageReference Include="YoutubeExplode.Converter" Version="6.5.7" />
-  </ItemGroup>
+   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="System.Dynamic.Runtime" Version="4.3.0" />
