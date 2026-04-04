@@ -1,6 +1,6 @@
 // ReSharper disable once CheckNamespace
 namespace CoreTest.CoreVM.Test;
-using Core;
+//using Core;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;

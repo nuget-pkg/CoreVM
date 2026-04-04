@@ -18,7 +18,7 @@ public class CoreVM {
     public static Assembly? CompileScript(string code, params string[] assemblyNames) {
         CSScript.Evaluator.With(static eval => { eval.IsCachingEnabled = false; });
         var script = CSScript.Evaluator
-            //.ReferenceAssembliesFromCode(code)
+                .ReferenceAssembliesFromCode(code)
             //.ReferenceAssemblyByName("System.Runtime")
             //.ReferenceAssemblyByName("System.Threading.Tasks.Extensions")
             ;
