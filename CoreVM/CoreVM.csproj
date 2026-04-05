@@ -38,29 +38,29 @@
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
     </PropertyGroup>
     <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
-        <Reference Include="Microsoft.CSharp"/>
-        <Reference Include="System"/>
-        <Reference Include="System.Core"/>
-        <Reference Include="System.Data"/>
-        <Reference Include="System.Data.DataSetExtensions"/>
-        <Reference Include="System.IO.Compression"/>
-        <Reference Include="System.Linq"/>
-        <Reference Include="System.Net.Http"/>
-        <Reference Include="System.Web"/>
-        <Reference Include="System.Xml"/>
-        <Reference Include="System.Xml.Linq"/>
+        <Reference Include="Microsoft.CSharp" />
+        <Reference Include="System" />
+        <Reference Include="System.Core" />
+        <Reference Include="System.Data" />
+        <Reference Include="System.Data.DataSetExtensions" />
+        <Reference Include="System.IO.Compression" />
+        <Reference Include="System.Linq" />
+        <Reference Include="System.Net.Http" />
+        <Reference Include="System.Web" />
+        <Reference Include="System.Xml" />
+        <Reference Include="System.Xml.Linq" />
     </ItemGroup>
     <ItemGroup>
-        <None Include=".\README.md" Pack="true" PackagePath=""/>
+        <None Include=".\README.md" Pack="true" PackagePath="" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="CS-Script" Version="4.14.4"/>
-        <PackageReference Include="EasyObject" Version="2026.404.1451.54"/>
-        <PackageReference Include="NuGet.Protocol" Version="7.3.0"/>
-        <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.6.3"/>
+        <PackageReference Include="CS-Script" Version="4.14.4" />
+        <PackageReference Include="EasyObject" Version="2026.405.952.13" />
+        <PackageReference Include="NuGet.Protocol" Version="7.3.0" />
+        <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.6.3" />
     </ItemGroup>
     <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-        <PackageReference Include="Microsoft.CSharp" Version="4.7.0"/>
-        <PackageReference Include="System.Dynamic.Runtime" Version="4.3.0"/>
+        <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+        <PackageReference Include="System.Dynamic.Runtime" Version="4.3.0" />
     </ItemGroup>
 </Project>
