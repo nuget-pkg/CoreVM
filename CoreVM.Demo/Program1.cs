@@ -24,7 +24,7 @@ public static class Program1 {
             // var answer = CoreVM.Add2(11, 22);
             // Debug(new { answer });
             var answer = 11 + 22;
-            ExpectEquivalent(
+            ExpectIdentical(
                 expected: 33,
                 actual: answer,
                 hint: new {
@@ -34,22 +34,22 @@ public static class Program1 {
                 exitCode: 1234
             );
             //new NativeScript().Run();
-            Line();
+            Pass();
             Log(code, "code");
             var assembly = CoreVM.CompileScript(
                 code,
                 [ /*"System.Threading.Tasks.Extensions"*/]
             );
-            Line();
+            Pass();
             ExpectBound(assembly);
-            Line();
+            Pass();
             dynamic? script = CoreVM.LookupScriptClass(assembly, "Script");
-            Line();
+            Pass();
             ExpectBound(script);
-            Line();
+            Pass();
             script!.Run();
             //Message("﴾↪️END OF PROGRAM↩️﴿");
-            Line();
+            Pass();
         }
         catch (Exception ex) {
             Abort(ex);

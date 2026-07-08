@@ -30,7 +30,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="EasyObject" Version="2026.405.952.13" />
+    <PackageReference Include="EasyObject" Version="2026.618.615.35" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CoreVM\CoreVM.csproj" />

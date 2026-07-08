@@ -54,9 +54,9 @@
         <None Include=".\README.md" Pack="true" PackagePath="" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="CS-Script" Version="4.14.4" />
-        <PackageReference Include="EasyObject" Version="2026.405.952.13" />
-        <PackageReference Include="NuGet.Protocol" Version="7.3.0" />
+        <PackageReference Include="CS-Script" Version="4.14.11" />
+        <PackageReference Include="EasyObject" Version="2026.618.615.35" />
+        <PackageReference Include="NuGet.Protocol" Version="7.6.0" />
         <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.6.3" />
     </ItemGroup>
     <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
