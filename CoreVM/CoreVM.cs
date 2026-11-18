@@ -93,7 +93,7 @@ public class CoreVM {
     }
     public static Assembly? CompileScript(string code, params string[] assemblyNames) {
         SourceRepository repository = Repository.Factory.GetCoreV3("https://api.nuget.org/v3/index.json");
-        FindPackageByIdResource resource = repository.GetResource<FindPackageByIdResource>();
+        FindPackageByIdResource resource = repository.GetResource<FindPackageByIdResource>()!;
         //Log(code);
         var lines = HyperOperatingSystem.TextToLines(code);
         //Log(lines);
@@ -217,7 +217,7 @@ public class NuGetHelper {
         SourceCacheContext cache = new SourceCacheContext();
         SourceRepository repository = Repository.Factory.GetCoreV3("https://api.nuget.org/v3/index.json");
         // 2. Get the FindPackageByIdResource
-        FindPackageByIdResource resource = await repository.GetResourceAsync<FindPackageByIdResource>();
+        FindPackageByIdResource resource = (await repository.GetResourceAsync<FindPackageByIdResource>())!;
         // 3. Fetch all versions for the package
         IEnumerable<NuGetVersion> versions = await resource.GetAllVersionsAsync(
             packageId,

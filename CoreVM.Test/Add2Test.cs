@@ -35,7 +35,7 @@ public class Add2Test {
         //var methodName = TestContext.CurrentContext.Test.MethodName;
         AssertIdentical(expected: 333, actual: 111 + 222);
         Echo($"▶passed-01", title: GeminiSuperFullName(this));
-        AssertEquivalent(expected: new object[] { 11, 22, 33 }, actual: NewArray(11, 22, 33));
+        AssertIdentical(expected: new object[] { 11, 22, 33 }, actual: NewArray(11, 22, 33));
         Echo($"▶passed-02", title: GeminiSuperFullName(this));
         var data1 = new Dictionary<string, object?> {
             { "Apple", 1 },
@@ -45,7 +45,7 @@ public class Add2Test {
         var data2 = new { Apple = 1, Banana = 2, List = NewArray(11, 22, 33) };
         Echo(data1, "▶data1");
         Echo(data2, "▶data2");
-        AssertEquivalent(expected: data1, actual: data2);
+        AssertIdentical(expected: data1, actual: data2);
         Echo($"▶passed-03", title: GeminiSuperFullName(this));
     }
 }

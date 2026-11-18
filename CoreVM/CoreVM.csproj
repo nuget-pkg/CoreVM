@@ -54,10 +54,11 @@
         <None Include=".\README.md" Pack="true" PackagePath="" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="CS-Script" Version="4.14.11" />
+        <PackageReference Include="CS-Script" Version="4.14.14" />
         <PackageReference Include="EasyObject" Version="2026.618.615.35" />
-        <PackageReference Include="NuGet.Protocol" Version="7.6.0" />
-        <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.6.3" />
+        <PackageReference Include="NuGet.Protocol" Version="8.0.0" />
+		<PackageReference Include="NuGet.Resolver" Version="8.0.0" />
+		<PackageReference Include="System.Threading.Tasks.Extensions" Version="4.6.3" />
     </ItemGroup>
     <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
         <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
